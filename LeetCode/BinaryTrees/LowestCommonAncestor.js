@@ -1,15 +1,7 @@
 /**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-
-/**
  *
  */
-var lowestCommonAcestorRec = function(root, p, q){
+var lowestCommonAcestorRec = function (root, p, q) {
 
 }
 
@@ -20,51 +12,21 @@ var lowestCommonAcestorRec = function(root, p, q){
  * @return {TreeNode}
  */
 var lowestCommonAncestor = function (root, p, q) {
-    var pile = new Array();
-    var stackNodes = new Array();
-    var foundBoth = false;
-    var foundP = false;
-    var foundQ = false;
 
-    var temp = root;
-    pile.push(root);
-    while(! foundBoth && pile.length != 0){
-        if(! (foundP || foundQ) && ! (temp.right == null && temp.left == null)){
-            stackNodes.push(temp);
-        }
-        if(temp.right != null){
-            pile.push(temp.right);
-        }
-        if(temp.left != null){
-            pile.push(temp.left);
-        }
-        if(compare(temp, p)){
-            foundP = true;
-        }
-        if(compare(temp, q)){
-            foundQ = true;
-        }
-        foundBoth = foundP && foundQ;
-
-        while(stackNodes.length >= pile.length){
-            stackNodes.pop();
-        }
-        temp = pile.pop();
-    }
-    return stackNodes.pop().val;
 };
 
 
-var compare = function (p, q){
-    if(p == null && q==null){
+var compare = function (p, q) {
+    if (p == null && q == null) {
         return true;
     }
-    else if(p!=null && q !=null && p.val == q.val){
+    else if (p != null && q != null && p.val == q.val) {
         return (compare(p.right, q.right) && compare(p.left, q.left));
-    }else{
+    } else {
         return false;
     }
 };
+
 
 /* Definition for a binary tree node. */
 function TreeNode(val, left, right) {
@@ -73,10 +35,41 @@ function TreeNode(val, left, right) {
     this.right = right;
 };
 
-var main = function(){
+/**
+ * By recursion
+ * @param root
+ * @param p
+ * @param q
+ */
+var lowestCommonAncestor = function (root, p, q) {
+   var left;
+    var right;
+    if(root.left == p || root.left == q){
+        left = root.val;
+        right = lowestCommonAncestor(root.right, p, q);
+    }
+    if(root.right == p || root.right == q){
+        right = root.val;
+    }
+
+    if(left == right){
+
+    }
+
+    left = lowestCommonAncestor(root.left, p, q);
+    right = lowestCommonAncestor(root.right, p, q);
+
+
+
+};
+
+
+
+
+var main = function () {
     var tree = new TreeNode(6,
         new TreeNode(2,
-            new TreeNode(3,null, null),
+            new TreeNode(3, null, null),
             new TreeNode(4,
                 new TreeNode(10, null, null),
                 new TreeNode(5, null, null))),
@@ -86,7 +79,7 @@ var main = function(){
 
     var tree2 = new TreeNode(6,
         new TreeNode(2,
-            new TreeNode(3,null, null),
+            new TreeNode(3, null, null),
             new TreeNode(4,
                 new TreeNode(3, null, null),
                 new TreeNode(5, null, null))),
@@ -97,8 +90,8 @@ var main = function(){
     //alert(findMin(tree));
     //alert(compare(tree, tree2));
 
-    alert(lowestCommonAncestor(tree, new TreeNode(3,null, null),
-        new TreeNode(5, null, null) ));
+    alert(lowestCommonAncestor(tree, new TreeNode(3, null, null),
+        new TreeNode(5, null, null)));
 }
 
 
