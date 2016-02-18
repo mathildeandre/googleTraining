@@ -1,31 +1,12 @@
-/**
- *
+
+/*
+
+    Find the lowest common ancestor of two given nodes in a Binary Search Tree
+    // TODO : in iteratif
+
  */
-var lowestCommonAcestorRec = function (root, p, q) {
-
-}
-
-/**
- * @param {TreeNode} root
- * @param {TreeNode} p
- * @param {TreeNode} q
- * @return {TreeNode}
- */
-var lowestCommonAncestor = function (root, p, q) {
-
-};
 
 
-var compare = function (p, q) {
-    if (p == null && q == null) {
-        return true;
-    }
-    else if (p != null && q != null && p.val == q.val) {
-        return (compare(p.right, q.right) && compare(p.left, q.left));
-    } else {
-        return false;
-    }
-};
 
 
 /* Definition for a binary tree node. */
@@ -42,56 +23,61 @@ function TreeNode(val, left, right) {
  * @param q
  */
 var lowestCommonAncestor = function (root, p, q) {
-   var left;
-    var right;
-    if(root.left == p || root.left == q){
-        left = root.val;
-        right = lowestCommonAncestor(root.right, p, q);
+    var left = null;
+    var right = null;
+    if(root == null){
+        return null;
     }
-    if(root.right == p || root.right == q){
-        right = root.val;
+    if(root == p || root ==q){
+        return root.val;
     }
-
-    if(left == right){
-
-    }
-
     left = lowestCommonAncestor(root.left, p, q);
     right = lowestCommonAncestor(root.right, p, q);
 
-
+    if(left != null && right != null){
+        return root.val;
+    }else if(left == null && right == null){
+        return null;
+    }else if(left == null){
+        return right;
+    }else if(right == null){
+        return left;
+    }
 
 };
 
-
+/**
+ *
+ *  f(6, 0, 5)
+ *      left = f(2,p,q) =   left=f(0,0,5) = 0
+ *                          right=f(4,0,5) =    left=f(3,0,5) =     left=f(null, = null
+ *                                                                  right = f(null =null
+ *                                                                  //traitement => null
+ *                                              right=f(5,0,5) = 5
+ *                                              //traitements
+ *                                              => 5
+ *                          //traitement
+ *                          => 2
+ *      right = f(8, p, q)
+ *      traitement
+ *      => 2
+ *
+ */
 
 
 var main = function () {
-    var tree = new TreeNode(6,
-        new TreeNode(2,
-            new TreeNode(3, null, null),
-            new TreeNode(4,
-                new TreeNode(10, null, null),
-                new TreeNode(5, null, null))),
-        new TreeNode(8,
-            new TreeNode(7, null, null),
-            new TreeNode(9, null, null)));
+    var p = new TreeNode(0, null, null);
+    var q2 = new TreeNode(5, null, null);
 
-    var tree2 = new TreeNode(6,
-        new TreeNode(2,
-            new TreeNode(3, null, null),
-            new TreeNode(4,
-                new TreeNode(3, null, null),
-                new TreeNode(5, null, null))),
-        new TreeNode(8,
-            new TreeNode(7, null, null),
-            new TreeNode(9, null, null)));
+    var q =   new TreeNode(4,
+        new TreeNode(3, null, null),
+        q2);
+    var tree = new TreeNode(6, new TreeNode(2, p,q), new TreeNode(8,
+        new TreeNode(7, null, null),
+        new TreeNode(9, null, null)));
 
-    //alert(findMin(tree));
-    //alert(compare(tree, tree2));
 
-    alert(lowestCommonAncestor(tree, new TreeNode(3, null, null),
-        new TreeNode(5, null, null)));
+    alert(lowestCommonAncestor(tree, p, q2));
 }
 
 

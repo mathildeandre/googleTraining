@@ -52,6 +52,17 @@ var findMinIt = function(root){
     return min;
 }
 
+var compare = function (p, q) {
+    if (p == null && q == null) {
+        return true;
+    }
+    else if (p != null && q != null && p.val == q.val) {
+        return (compare(p.right, q.right) && compare(p.left, q.left));
+    } else {
+        return false;
+    }
+};
+
 var main = function(){
     var tree = new TreeNode(6,
         new TreeNode(2,
